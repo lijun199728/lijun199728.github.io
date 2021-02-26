@@ -88,6 +88,16 @@
   <div class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2021/02/24/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%AD%E5%8F%A5/">数据库操作语句</a>
+    </h1>
+  
+
+      </header>
+    
     <div class="e-content article-entry" itemprop="articleBody">
       
         <h2 id="查询语句"><a href="#查询语句" class="headerlink" title="查询语句"></a>查询语句</h2><h3 id="查询指定表所有数据"><a href="#查询指定表所有数据" class="headerlink" title="查询指定表所有数据"></a>查询指定表所有数据</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM 表名</span><br></pre></td></tr></table></figure>
@@ -98,12 +108,14 @@
 <h2 id="WHERE语句"><a href="#WHERE语句" class="headerlink" title="WHERE语句"></a>WHERE语句</h2><h3 id="常见运算符"><a href="#常见运算符" class="headerlink" title="常见运算符"></a>常见运算符</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">不等于 &lt;&gt;或者！&#x3D;</span><br><span class="line">两者之间 BETWEEN</span><br><span class="line">相似 LIKE</span><br></pre></td></tr></table></figure>
 <h2 id="AND-和-OR"><a href="#AND-和-OR" class="headerlink" title="AND 和 OR"></a>AND 和 OR</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">可以在where语句中将多个条件结合起来</span><br></pre></td></tr></table></figure>
 <h2 id="排序语句"><a href="#排序语句" class="headerlink" title="排序语句"></a>排序语句</h2><h3 id="使用-ORDER-BY-子句对结果进行排序-ASC升序-DESC降序"><a href="#使用-ORDER-BY-子句对结果进行排序-ASC升序-DESC降序" class="headerlink" title="使用 ORDER BY 子句对结果进行排序 ASC升序 DESC降序"></a>使用 ORDER BY 子句对结果进行排序 ASC升序 DESC降序</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FORM 表名 ORDER BY 列名</span><br></pre></td></tr></table></figure>
-<h3 id="多重排序规则"><a href="#多重排序规则" class="headerlink" title="多重排序规则"></a>多重排序规则</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT 列名称 FROM 表名称 ORDER BY 列名称 [排序规则],  列名称 [排序规则]</span><br></pre></td></tr></table></figure>
-<h3 id="同时使用-ORDER-BY-和-WHERE子句时-应该让-ORDER-BY-位于-WHERE-之后-否则将会产生错误"><a href="#同时使用-ORDER-BY-和-WHERE子句时-应该让-ORDER-BY-位于-WHERE-之后-否则将会产生错误" class="headerlink" title="同时使用 ORDER BY 和 WHERE子句时, 应该让 ORDER BY 位于 WHERE 之后, 否则将会产生错误"></a>同时使用 ORDER BY 和 WHERE子句时, 应该让 ORDER BY 位于 WHERE 之后, 否则将会产生错误</h3>
+<h3 id="多重排序规则"><a href="#多重排序规则" class="headerlink" title="多重排序规则"></a>多重排序规则</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT 列名称 FROM 表名称 ORDER BY 列名称 [排序规则],  列名称 [排序规则]</span><br><span class="line">同时使用 ORDER BY 和 WHERE子句时, 应该让 ORDER BY 位于 WHERE 之后, 否则将会产生错误</span><br></pre></td></tr></table></figure>
+<h2 id="返回符合指定条件的行数"><a href="#返回符合指定条件的行数" class="headerlink" title="返回符合指定条件的行数"></a>返回符合指定条件的行数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT COUNT(*) FROM 表名</span><br></pre></td></tr></table></figure>
+
+<h2 id="给查询出来的列起别名"><a href="#给查询出来的列起别名" class="headerlink" title="给查询出来的列起别名"></a>给查询出来的列起别名</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT 列名 AS 别名 FROM 表名</span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://lijun199728.github.io/2021/02/24/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%AD%E5%8F%A5/" data-id="ckljhatv40006ccw224gd1hdw" data-title="" class="article-share-link">分享</a>
+      <a data-url="https://lijun199728.github.io/2021/02/24/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%AD%E5%8F%A5/" data-id="cklma0qto0005r4w27tq94ygj" data-title="数据库操作语句" class="article-share-link">分享</a>
       
       
       
@@ -335,7 +347,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://lijun199728.github.io/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC06%E5%A4%A9%E7%AC%94%E8%AE%B0/" data-id="ckljhatv30005ccw2hibc5a4t" data-title="" class="article-share-link">分享</a>
+      <a data-url="https://lijun199728.github.io/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC06%E5%A4%A9%E7%AC%94%E8%AE%B0/" data-id="cklma0qtq0006r4w23o8d4v78" data-title="" class="article-share-link">分享</a>
       
       
       
@@ -616,7 +628,7 @@ JavaScript（es6前）中的作用域有两种：
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://lijun199728.github.io/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC05%E5%A4%A9%E7%AC%94%E8%AE%B0/" data-id="ckljhatv20004ccw29844d3g3" data-title="" class="article-share-link">分享</a>
+      <a data-url="https://lijun199728.github.io/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC05%E5%A4%A9%E7%AC%94%E8%AE%B0/" data-id="cklma0qtn0004r4w2azdn1zvd" data-title="" class="article-share-link">分享</a>
       
       
       
@@ -797,7 +809,7 @@ JavaScript（es6前）中的作用域有两种：
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://lijun199728.github.io/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC04%E5%A4%A9%E7%AC%94%E8%AE%B0/" data-id="ckljhatv10003ccw2cvwk1kms" data-title="" class="article-share-link">分享</a>
+      <a data-url="https://lijun199728.github.io/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC04%E5%A4%A9%E7%AC%94%E8%AE%B0/" data-id="cklma0qtk0002r4w2h1ptddu0" data-title="" class="article-share-link">分享</a>
       
       
       
@@ -952,7 +964,7 @@ JavaScript（es6前）中的作用域有两种：
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://lijun199728.github.io/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC03%E5%A4%A9%E7%AC%94%E8%AE%B0/" data-id="ckljhatv00002ccw2fykgcp08" data-title="" class="article-share-link">分享</a>
+      <a data-url="https://lijun199728.github.io/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC03%E5%A4%A9%E7%AC%94%E8%AE%B0/" data-id="cklma0qtm0003r4w2hbm6bhyc" data-title="" class="article-share-link">分享</a>
       
       
       
@@ -1176,7 +1188,7 @@ JavaScript（es6前）中的作用域有两种：
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://lijun199728.github.io/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC02%E5%A4%A9%E7%AC%94%E8%AE%B0/" data-id="ckljhatuw0001ccw298bp0qlm" data-title="" class="article-share-link">分享</a>
+      <a data-url="https://lijun199728.github.io/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC02%E5%A4%A9%E7%AC%94%E8%AE%B0/" data-id="cklma0qth0001r4w20byi3kiv" data-title="" class="article-share-link">分享</a>
       
       
       
@@ -1691,7 +1703,7 @@ JS中的注释主要有两种，分别是 单行注释 和 多行注释。
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://lijun199728.github.io/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC01%E5%A4%A9%E7%AC%94%E8%AE%B0/" data-id="ckljhatv90007ccw236x92pu5" data-title="" class="article-share-link">分享</a>
+      <a data-url="https://lijun199728.github.io/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC01%E5%A4%A9%E7%AC%94%E8%AE%B0/" data-id="cklma0qtx0007r4w2e1ob68p3" data-title="" class="article-share-link">分享</a>
       
       
       
@@ -1734,7 +1746,7 @@ JS中的注释主要有两种，分别是 单行注释 和 多行注释。
       <ul>
         
           <li>
-            <a href="/2021/02/24/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%AD%E5%8F%A5/">(no title)</a>
+            <a href="/2021/02/24/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%AD%E5%8F%A5/">数据库操作语句</a>
           </li>
         
           <li>
