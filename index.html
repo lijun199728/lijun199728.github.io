@@ -78,6 +78,65 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-mysql模块操作数据库" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/02/26/mysql%E6%A8%A1%E5%9D%97%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/" class="article-date">
+  <time class="dt-published" datetime="2021-02-26T12:35:06.402Z" itemprop="datePublished">2021-02-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2021/02/26/mysql%E6%A8%A1%E5%9D%97%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/">mysql模块操作数据库</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="1-下载mysql包"><a href="#1-下载mysql包" class="headerlink" title="1.下载mysql包"></a>1.下载mysql包</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install mysql</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-导入mysql包"><a href="#2-导入mysql包" class="headerlink" title="2.导入mysql包"></a>2.导入mysql包</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mysql = <span class="built_in">require</span>(<span class="string">&#x27;mysql&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-链接数据库"><a href="#3-链接数据库" class="headerlink" title="3.链接数据库"></a>3.链接数据库</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> db = mysql.createPool(&#123;</span><br><span class="line">    host:<span class="string">&#x27;主机名&#x27;</span>,</span><br><span class="line">    root:<span class="string">&#x27;用户名&#x27;</span>,</span><br><span class="line">    password:<span class="string">&#x27;密码&#x27;</span>,</span><br><span class="line">    database:<span class="string">&#x27;数据库名字&#x27;</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-使用query-测试是否连接成功"><a href="#4-使用query-测试是否连接成功" class="headerlink" title="4.使用query()测试是否连接成功"></a>4.使用query()测试是否连接成功</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">db.query(<span class="string">&#x27;select 1+1&#x27;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err,results</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(err) <span class="keyword">return</span> <span class="built_in">console</span>.log(err.message)</span><br><span class="line">    <span class="built_in">console</span>.log(results)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="5-查询表user的数据"><a href="#5-查询表user的数据" class="headerlink" title="5.查询表user的数据"></a>5.查询表user的数据</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义mysql查询语句</span></span><br><span class="line"><span class="keyword">const</span> sql = <span class="string">`select * from 表名`</span></span><br><span class="line"><span class="comment">//执行查询</span></span><br><span class="line">db.query(sql,<span class="function">(<span class="params">err,results</span>)=&gt;</span>&#123;<span class="comment">//查询返回的results是个数组</span></span><br><span class="line">    <span class="keyword">if</span>(err) <span class="keyword">return</span> <span class="built_in">console</span>.log(err.message)</span><br><span class="line">    <span class="built_in">console</span>.log(results)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-插入数据"><a href="#6-插入数据" class="headerlink" title="6.插入数据"></a>6.插入数据</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定于插入语句</span></span><br><span class="line"><span class="keyword">const</span> sql = <span class="string">`insert into 表名 (列名1,列名2...) values(?,?...)`</span></span><br><span class="line"><span class="comment">//执行插入 </span></span><br><span class="line">db.query(sql,[<span class="string">&#x27;值1&#x27;</span>,<span class="string">&#x27;值2&#x27;</span>...],<span class="function">(<span class="params">err,results</span>)=&gt;</span>&#123;<span class="comment">//返回的results是个对象</span></span><br><span class="line">    <span class="keyword">if</span>(err) <span class="keyword">return</span> <span class="built_in">console</span>.log(err.message)</span><br><span class="line">    <span class="keyword">if</span>(results.affectedRows==<span class="number">1</span>)&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;插入成功！&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-插入语句的快捷方式"><a href="#7-插入语句的快捷方式" class="headerlink" title="7.插入语句的快捷方式"></a>7.插入语句的快捷方式</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义插入的数据</span></span><br><span class="line"><span class="keyword">const</span> data = &#123;列名<span class="number">1</span>:<span class="string">&#x27;值1&#x27;</span>,列名<span class="number">2</span>:<span class="string">&#x27;值2&#x27;</span>,...&#125;</span><br><span class="line"><span class="comment">//定义插入语句</span></span><br><span class="line"><span class="keyword">const</span> sql = <span class="string">`insert into 表名 set ?`</span></span><br><span class="line"><span class="comment">//执行插入</span></span><br><span class="line">db.query(sql,[data],<span class="function">(<span class="params">err,results</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(err)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">console</span>.log(err.message)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(results.affectedRows==<span class="number">1</span>)&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;插入成功！&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="8-跟新数据"><a href="#8-跟新数据" class="headerlink" title="8.跟新数据"></a>8.跟新数据</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义跟新的数据</span></span><br><span class="line"><span class="keyword">const</span> update = &#123;<span class="attr">id</span>:值,<span class="string">&#x27;列名1&#x27;</span>:<span class="string">&#x27;值1&#x27;</span>,<span class="string">&#x27;列名2&#x27;</span>:<span class="string">&#x27;值2&#x27;</span>,...&#125;</span><br><span class="line"><span class="comment">//定义跟新语句</span></span><br><span class="line"><span class="keyword">const</span> sql = <span class="string">`update 表名 set &#x27;列名1&#x27;=?,&#x27;列名2&#x27;=?,... where id=?`</span></span><br><span class="line"><span class="comment">// 执行跟新</span></span><br><span class="line">db.query(sql,[update.列名<span class="number">1</span>,update.列名<span class="number">2</span>,...,update.id],<span class="function">(<span class="params">err,results</span>)=&gt;</span>&#123;</span><br><span class="line">     <span class="keyword">if</span>(err)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">console</span>.log(err.message)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(results.affectedRows==<span class="number">1</span>)&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;跟新成功！&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="9-跟新数据快捷方式"><a href="#9-跟新数据快捷方式" class="headerlink" title="9.跟新数据快捷方式"></a>9.跟新数据快捷方式</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义跟新的数据</span></span><br><span class="line"><span class="keyword">const</span> update = &#123;列表<span class="number">1</span>:<span class="string">&#x27;值1&#x27;</span>,列表<span class="number">1</span>:<span class="string">&#x27;值1&#x27;</span>,...&#125;</span><br><span class="line"><span class="comment">// 定义跟新语句</span></span><br><span class="line"><span class="keyword">const</span> sql = <span class="string">`update 表名 set ? where id=?`</span></span><br><span class="line"><span class="comment">//执行跟新语句</span></span><br><span class="line">db.query(sql,[update,id值],<span class="function">(<span class="params">err,results</span>)=&gt;</span>&#123;</span><br><span class="line">     <span class="keyword">if</span>(err)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">console</span>.log(err.message)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(results.affectedRows==<span class="number">1</span>)&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;跟新成功！&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="10-删除数据-一般根据id删除"><a href="#10-删除数据-一般根据id删除" class="headerlink" title="10.删除数据 一般根据id删除"></a>10.删除数据 一般根据id删除</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义删除语句</span></span><br><span class="line"><span class="keyword">const</span> sql = <span class="string">`delete from 表名 where id=?`</span></span><br><span class="line"><span class="comment">// 执行删除语句</span></span><br><span class="line">db.query(sql,[id值],<span class="function">(<span class="params">err,results</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(err)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">console</span>.log(err.message)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(results.affectedRows==<span class="number">1</span>)&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;删除成功！&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="11-标记删除-通过跟新数据的某个跟id相似的值"><a href="#11-标记删除-通过跟新数据的某个跟id相似的值" class="headerlink" title="11.标记删除 通过跟新数据的某个跟id相似的值"></a>11.标记删除 通过跟新数据的某个跟id相似的值</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义跟新数据</span></span><br><span class="line"><span class="keyword">const</span> sql = <span class="string">`update 表名 set 列名=? where id=?`</span></span><br><span class="line"><span class="comment">// 执行语句</span></span><br><span class="line">db.query(sql,[列值,id值],<span class="function">(<span class="params">err,results</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(err)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">console</span>.log(err.message)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(results.affectedRows==<span class="number">1</span>)&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;删除成功！&#x27;</span>)</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://lijun199728.github.io/2021/02/26/mysql%E6%A8%A1%E5%9D%97%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/" data-id="cklmc827j0006fow2ga838nr8" data-title="mysql模块操作数据库" class="article-share-link">分享</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-数据库语句" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2021/02/24/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%AD%E5%8F%A5/" class="article-date">
@@ -102,11 +161,15 @@
       
         <h2 id="查询语句"><a href="#查询语句" class="headerlink" title="查询语句"></a>查询语句</h2><h3 id="查询指定表所有数据"><a href="#查询指定表所有数据" class="headerlink" title="查询指定表所有数据"></a>查询指定表所有数据</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM 表名</span><br></pre></td></tr></table></figure>
 <h3 id="查询指定表指定列数据"><a href="#查询指定表指定列数据" class="headerlink" title="查询指定表指定列数据"></a>查询指定表指定列数据</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT 列名 FROM 表名</span><br></pre></td></tr></table></figure>
+
 <h2 id="插入语句"><a href="#插入语句" class="headerlink" title="插入语句"></a>插入语句</h2><h3 id="向指定表中插入数据"><a href="#向指定表中插入数据" class="headerlink" title="向指定表中插入数据"></a>向指定表中插入数据</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO 表名称(列1,列2,...) VALUES (值1,值2,...)</span><br></pre></td></tr></table></figure>
 <h2 id="更新语句"><a href="#更新语句" class="headerlink" title="更新语句"></a>更新语句</h2><h3 id="更新数据表中某一列或者多列数据"><a href="#更新数据表中某一列或者多列数据" class="headerlink" title="更新数据表中某一列或者多列数据"></a>更新数据表中某一列或者多列数据</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UPDATA 表名称 SET 列1&#x3D;值1,列2&#x3D;值2,... WHERE 列名称&#x3D;值</span><br></pre></td></tr></table></figure>
+
 <h2 id="删除语句"><a href="#删除语句" class="headerlink" title="删除语句"></a>删除语句</h2><h3 id="删除数据表中某一行或者多行数据"><a href="#删除数据表中某一行或者多行数据" class="headerlink" title="删除数据表中某一行或者多行数据"></a>删除数据表中某一行或者多行数据</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DELETE FROM 表名 WHERE 列名&#x3D;值</span><br></pre></td></tr></table></figure>
+
 <h2 id="WHERE语句"><a href="#WHERE语句" class="headerlink" title="WHERE语句"></a>WHERE语句</h2><h3 id="常见运算符"><a href="#常见运算符" class="headerlink" title="常见运算符"></a>常见运算符</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">不等于 &lt;&gt;或者！&#x3D;</span><br><span class="line">两者之间 BETWEEN</span><br><span class="line">相似 LIKE</span><br></pre></td></tr></table></figure>
 <h2 id="AND-和-OR"><a href="#AND-和-OR" class="headerlink" title="AND 和 OR"></a>AND 和 OR</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">可以在where语句中将多个条件结合起来</span><br></pre></td></tr></table></figure>
+
 <h2 id="排序语句"><a href="#排序语句" class="headerlink" title="排序语句"></a>排序语句</h2><h3 id="使用-ORDER-BY-子句对结果进行排序-ASC升序-DESC降序"><a href="#使用-ORDER-BY-子句对结果进行排序-ASC升序-DESC降序" class="headerlink" title="使用 ORDER BY 子句对结果进行排序 ASC升序 DESC降序"></a>使用 ORDER BY 子句对结果进行排序 ASC升序 DESC降序</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FORM 表名 ORDER BY 列名</span><br></pre></td></tr></table></figure>
 <h3 id="多重排序规则"><a href="#多重排序规则" class="headerlink" title="多重排序规则"></a>多重排序规则</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT 列名称 FROM 表名称 ORDER BY 列名称 [排序规则],  列名称 [排序规则]</span><br><span class="line">同时使用 ORDER BY 和 WHERE子句时, 应该让 ORDER BY 位于 WHERE 之后, 否则将会产生错误</span><br></pre></td></tr></table></figure>
 <h2 id="返回符合指定条件的行数"><a href="#返回符合指定条件的行数" class="headerlink" title="返回符合指定条件的行数"></a>返回符合指定条件的行数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT COUNT(*) FROM 表名</span><br></pre></td></tr></table></figure>
@@ -115,7 +178,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://lijun199728.github.io/2021/02/24/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%AD%E5%8F%A5/" data-id="cklma0qto0005r4w27tq94ygj" data-title="数据库操作语句" class="article-share-link">分享</a>
+      <a data-url="https://lijun199728.github.io/2021/02/24/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%AD%E5%8F%A5/" data-id="cklmc827l0007fow20xyya161" data-title="数据库操作语句" class="article-share-link">分享</a>
       
       
       
@@ -347,7 +410,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://lijun199728.github.io/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC06%E5%A4%A9%E7%AC%94%E8%AE%B0/" data-id="cklma0qtq0006r4w23o8d4v78" data-title="" class="article-share-link">分享</a>
+      <a data-url="https://lijun199728.github.io/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC06%E5%A4%A9%E7%AC%94%E8%AE%B0/" data-id="cklmc827i0005fow2cb2dao2k" data-title="" class="article-share-link">分享</a>
       
       
       
@@ -628,7 +691,7 @@ JavaScript（es6前）中的作用域有两种：
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://lijun199728.github.io/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC05%E5%A4%A9%E7%AC%94%E8%AE%B0/" data-id="cklma0qtn0004r4w2azdn1zvd" data-title="" class="article-share-link">分享</a>
+      <a data-url="https://lijun199728.github.io/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC05%E5%A4%A9%E7%AC%94%E8%AE%B0/" data-id="cklmc827h0004fow201h57l5j" data-title="" class="article-share-link">分享</a>
       
       
       
@@ -809,7 +872,7 @@ JavaScript（es6前）中的作用域有两种：
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://lijun199728.github.io/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC04%E5%A4%A9%E7%AC%94%E8%AE%B0/" data-id="cklma0qtk0002r4w2h1ptddu0" data-title="" class="article-share-link">分享</a>
+      <a data-url="https://lijun199728.github.io/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC04%E5%A4%A9%E7%AC%94%E8%AE%B0/" data-id="cklmc827g0003fow29e3x6kt3" data-title="" class="article-share-link">分享</a>
       
       
       
@@ -964,7 +1027,7 @@ JavaScript（es6前）中的作用域有两种：
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://lijun199728.github.io/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC03%E5%A4%A9%E7%AC%94%E8%AE%B0/" data-id="cklma0qtm0003r4w2hbm6bhyc" data-title="" class="article-share-link">分享</a>
+      <a data-url="https://lijun199728.github.io/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC03%E5%A4%A9%E7%AC%94%E8%AE%B0/" data-id="cklmc827f0002fow24jiedray" data-title="" class="article-share-link">分享</a>
       
       
       
@@ -1188,7 +1251,7 @@ JavaScript（es6前）中的作用域有两种：
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://lijun199728.github.io/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC02%E5%A4%A9%E7%AC%94%E8%AE%B0/" data-id="cklma0qth0001r4w20byi3kiv" data-title="" class="article-share-link">分享</a>
+      <a data-url="https://lijun199728.github.io/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC02%E5%A4%A9%E7%AC%94%E8%AE%B0/" data-id="cklmc827c0001fow2dzds0ij7" data-title="" class="article-share-link">分享</a>
       
       
       
@@ -1703,7 +1766,7 @@ JS中的注释主要有两种，分别是 单行注释 和 多行注释。
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://lijun199728.github.io/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC01%E5%A4%A9%E7%AC%94%E8%AE%B0/" data-id="cklma0qtx0007r4w2e1ob68p3" data-title="" class="article-share-link">分享</a>
+      <a data-url="https://lijun199728.github.io/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC01%E5%A4%A9%E7%AC%94%E8%AE%B0/" data-id="cklmc827s0008fow2biyc8ugx" data-title="" class="article-share-link">分享</a>
       
       
       
@@ -1746,6 +1809,10 @@ JS中的注释主要有两种，分别是 单行注释 和 多行注释。
       <ul>
         
           <li>
+            <a href="/2021/02/26/mysql%E6%A8%A1%E5%9D%97%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/">mysql模块操作数据库</a>
+          </li>
+        
+          <li>
             <a href="/2021/02/24/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%AD%E5%8F%A5/">数据库操作语句</a>
           </li>
         
@@ -1759,10 +1826,6 @@ JS中的注释主要有两种，分别是 单行注释 和 多行注释。
         
           <li>
             <a href="/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC04%E5%A4%A9%E7%AC%94%E8%AE%B0/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC03%E5%A4%A9%E7%AC%94%E8%AE%B0/">(no title)</a>
           </li>
         
       </ul>
