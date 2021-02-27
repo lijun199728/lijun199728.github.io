@@ -78,6 +78,53 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-前后端身份认证" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/02/27/%E5%89%8D%E5%90%8E%E7%AB%AF%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81/" class="article-date">
+  <time class="dt-published" datetime="2021-02-27T02:37:41.717Z" itemprop="datePublished">2021-02-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="在Express中使用session认证"><a href="#在Express中使用session认证" class="headerlink" title="在Express中使用session认证"></a>在Express中使用session认证</h2><p>session认证机制:用户在客户端进行登录，服务端验证用户的登录信息，并生成cookie开辟一块空间将用户的信息与之对应存储在客户端，通过响应头的方式将cookie返回给客户端，客户端将服务端返回的cookie存储在session中，当用户再次发送请求时会主动已请求头的方式将cookie发送给服务端，服务器根据cookie验证用户的信息，如果验证成功就会返回用户信息的请求信息。</p>
+<h3 id="下载express-session包"><a href="#下载express-session包" class="headerlink" title="下载express-session包"></a>下载express-session包</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install express-session</span><br></pre></td></tr></table></figure>
+<h3 id="导入express-seesion包"><a href="#导入express-seesion包" class="headerlink" title="导入express-seesion包"></a>导入express-seesion包</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> session = <span class="built_in">require</span>(<span class="string">&#x27;express-seesion&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="注册全局session中间件并配置"><a href="#注册全局session中间件并配置" class="headerlink" title="注册全局session中间件并配置"></a>注册全局session中间件并配置</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">app.use(session(&#123;</span><br><span class="line">  secret: <span class="string">&#x27;keyboard cat&#x27;</span>,</span><br><span class="line">  resave: <span class="literal">false</span>,</span><br><span class="line">  saveUninitialized: <span class="literal">true</span></span><br><span class="line">&#125;))</span><br></pre></td></tr></table></figure>
+<h3 id="登录接口"><a href="#登录接口" class="headerlink" title="登录接口"></a>登录接口</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">app.post(<span class="string">&#x27;/api/login&#x27;</span>,<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(req.body.username!==<span class="string">&#x27;admin&#x27;</span>&amp;&amp;req.body.password!==<span class="string">&#x27;000000&#x27;</span>)&#123;</span><br><span class="line">       <span class="keyword">return</span> res.send(&#123;</span><br><span class="line">           		status:<span class="number">1</span>,</span><br><span class="line">           		message:<span class="string">&#x27;登录失败！&#x27;</span></span><br><span class="line">               &#125;)</span><br><span class="line">   &#125;</span><br><span class="line">    <span class="comment">// TODO_02：请将登录成功后的用户信息，保存到 Session 中</span></span><br><span class="line">    req.session.user = req.body</span><br><span class="line">    req.session.islogin = <span class="literal">true</span></span><br><span class="line">    </span><br><span class="line">    res.send(&#123; <span class="attr">status</span>: <span class="number">0</span>, <span class="attr">msg</span>: <span class="string">&#x27;登录成功&#x27;</span> &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="获取用户信息"><a href="#获取用户信息" class="headerlink" title="获取用户信息"></a>获取用户信息</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取用户姓名的接口</span></span><br><span class="line">app.get(<span class="string">&#x27;/api/username&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// TODO_03：请从 Session 中获取用户的名称，响应给客户端</span></span><br><span class="line">    <span class="keyword">if</span> (req.session.islogin != <span class="literal">true</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> res.send(&#123;</span><br><span class="line">            status: <span class="number">1</span>,</span><br><span class="line">            message: <span class="string">&#x27;获取用户信息失败!&#x27;</span></span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    res.send(&#123; <span class="attr">status</span>: <span class="number">0</span>, <span class="attr">username</span>: req.session.user.username &#125;)</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="退出登录"><a href="#退出登录" class="headerlink" title="退出登录"></a>退出登录</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/ 退出登录的接口</span><br><span class="line">app.post(<span class="string">&#x27;/api/logout&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// TODO_04：清空 Session 信息</span></span><br><span class="line">    req.session.destroy()</span><br><span class="line">    res.send(&#123; <span class="attr">status</span>: <span class="number">0</span>, <span class="attr">msg</span>: <span class="string">&#x27;退出成功！&#x27;</span> &#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="在express项目中使用JsonWebToken认证"><a href="#在express项目中使用JsonWebToken认证" class="headerlink" title="在express项目中使用JsonWebToken认证"></a>在express项目中使用JsonWebToken认证</h2><p>jwt认证机制是浏览器登录向服务器发送请求，服务器验证成功后将用户信息加密之后赋值给token属性，然后返回给浏览器，浏览器将token存储到Local Storage或者Session Storage 中，当浏览器再次向服务器发送请求时会将token放在请求头Authorization中一起发送到服务器，服务器解密token验证成功后会将浏览器请求的数据返回给浏览器</p>
+<h3 id="下载jsonwebtoken和express-jwt包"><a href="#下载jsonwebtoken和express-jwt包" class="headerlink" title="下载jsonwebtoken和express-jwt包"></a>下载jsonwebtoken和express-jwt包</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install jsonwebtoken express-jwt</span><br></pre></td></tr></table></figure>
+<h3 id="安装包"><a href="#安装包" class="headerlink" title="安装包"></a>安装包</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// TODO_01：安装并导入 JWT 相关的两个包，分别是 jsonwebtoken 和 express-jwt</span></span><br><span class="line"><span class="keyword">const</span> jwt = <span class="built_in">require</span>(<span class="string">&#x27;jsonwebtoken&#x27;</span>) <span class="comment">//用于生成jwt字符串</span></span><br><span class="line"><span class="keyword">const</span> expressJwt = <span class="built_in">require</span>(<span class="string">&#x27;express-jwt&#x27;</span>) <span class="comment">//将客户端发送来的字符串解析成原来的JSON对象</span></span><br></pre></td></tr></table></figure>
+<h3 id="定义密钥"><a href="#定义密钥" class="headerlink" title="定义密钥"></a>定义密钥</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// TODO_02：定义 secret 密钥，建议将密钥命名为 secretKey</span></span><br><span class="line"><span class="keyword">const</span> secretKey = <span class="string">&#x27;lijun ^-^&#x27;</span> <span class="comment">//防止网络传输中被别人破密，在将用户信息转换为jwt字符串时用于加密，在将jwt字符串还原JSON对象时用于解密</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="将用户信息加密"><a href="#将用户信息加密" class="headerlink" title="将用户信息加密"></a>将用户信息加密</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 登录接口</span></span><br><span class="line">app.post(<span class="string">&#x27;/api/login&#x27;</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 将 req.body 请求体中的数据，转存为 userinfo 常量</span></span><br><span class="line">    <span class="keyword">const</span> userinfo = req.body</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 登录失败</span></span><br><span class="line">    <span class="keyword">if</span> (userinfo.username !== <span class="string">&#x27;admin&#x27;</span> || userinfo.password !== <span class="string">&#x27;000000&#x27;</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> res.send(&#123;</span><br><span class="line">            status: <span class="number">400</span>,</span><br><span class="line">            message: <span class="string">&#x27;登录失败！&#x27;</span></span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 登录成功</span></span><br><span class="line">    <span class="comment">// TODO_03：在登录成功之后，调用 jwt.sign() 方法生成 JWT 字符串。并通过 token 属性发送给客户端,三个参数：用户的信息，密钥，token时限</span></span><br><span class="line">    res.send(&#123;</span><br><span class="line">        status: <span class="number">200</span>,</span><br><span class="line">        message: <span class="string">&#x27;登陆成功！&#x27;</span>,</span><br><span class="line">        token: jwt.sign(&#123; <span class="attr">username</span>: userinfo.username, <span class="attr">password</span>: userinfo.password &#125;, secretKey, &#123; <span class="attr">expiresIn</span>: <span class="string">&#x27;30s&#x27;</span> &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="注册解密中间件"><a href="#注册解密中间件" class="headerlink" title="注册解密中间件"></a>注册解密中间件</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// TODO_04：注册将 JWT 字符串解析还原成 JSON 对象的中间件,expressJwt(&#123;secret:secretKey&#125;)用来解析，unless(&#123;path:[/^\/api\//]&#125;)配置指定哪些接口不需要访问权限</span></span><br><span class="line"><span class="comment">// 解析中间件配置成功后，就会将用户信息挂载到req.user上</span></span><br><span class="line">app.use(jwtExpress(&#123;<span class="attr">secret</span>:secretKey,<span class="attr">algorithms</span>: [<span class="string">&#x27;HS256&#x27;</span>]&#125;).unless(&#123; <span class="attr">path</span>: [<span class="regexp">/^\/api\//</span>] &#125;))</span><br></pre></td></tr></table></figure>
+<h3 id="解密的用户信息发送给用户"><a href="#解密的用户信息发送给用户" class="headerlink" title="解密的用户信息发送给用户"></a>解密的用户信息发送给用户</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这是一个有权限的 API 接口</span></span><br><span class="line">app.get(<span class="string">&#x27;/admin/getinfo&#x27;</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// TODO_05：使用 req.user 获取用户信息，并使用 data 属性将用户信息发送给客户端</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    res.send(&#123;</span><br><span class="line">        status: <span class="number">200</span>,</span><br><span class="line">        message: <span class="string">&#x27;获取用户信息成功！&#x27;</span>,</span><br><span class="line">        data: req.user <span class="comment">// 要发送给客户端的用户信息</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="使用全局错误中间件捕获解析jwt失败后产生的错误"><a href="#使用全局错误中间件捕获解析jwt失败后产生的错误" class="headerlink" title="使用全局错误中间件捕获解析jwt失败后产生的错误"></a>使用全局错误中间件捕获解析jwt失败后产生的错误</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// TODO_06：使用全局错误处理中间件，捕获解析 JWT 失败后产生的错误</span></span><br><span class="line">app.use(<span class="function">(<span class="params">err, req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (err.name == <span class="string">&#x27;UnauthorizedError&#x27;</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> res.send(&#123;</span><br><span class="line">            status: <span class="number">401</span>,</span><br><span class="line">            message: <span class="string">&#x27;token失效！&#x27;</span></span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    res.send(&#123;</span><br><span class="line">        status: <span class="number">500</span>,</span><br><span class="line">        message: <span class="string">&#x27;未知错误！&#x27;</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://lijun199728.github.io/2021/02/27/%E5%89%8D%E5%90%8E%E7%AB%AF%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81/" data-id="cklnehe2b0006lww21wehg59v" data-title="" class="article-share-link">分享</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-mysql模块操作数据库" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2021/02/26/mysql%E6%A8%A1%E5%9D%97%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/" class="article-date">
@@ -125,7 +172,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://lijun199728.github.io/2021/02/26/mysql%E6%A8%A1%E5%9D%97%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/" data-id="cklmc827j0006fow2ga838nr8" data-title="mysql模块操作数据库" class="article-share-link">分享</a>
+      <a data-url="https://lijun199728.github.io/2021/02/26/mysql%E6%A8%A1%E5%9D%97%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/" data-id="cklnehe2a0005lww2cydk7try" data-title="mysql模块操作数据库" class="article-share-link">分享</a>
       
       
       
@@ -178,7 +225,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://lijun199728.github.io/2021/02/24/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%AD%E5%8F%A5/" data-id="cklmc827l0007fow20xyya161" data-title="数据库操作语句" class="article-share-link">分享</a>
+      <a data-url="https://lijun199728.github.io/2021/02/24/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%AD%E5%8F%A5/" data-id="cklnehe2c0007lww22dqd7y02" data-title="数据库操作语句" class="article-share-link">分享</a>
       
       
       
@@ -410,7 +457,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://lijun199728.github.io/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC06%E5%A4%A9%E7%AC%94%E8%AE%B0/" data-id="cklmc827i0005fow2cb2dao2k" data-title="" class="article-share-link">分享</a>
+      <a data-url="https://lijun199728.github.io/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC06%E5%A4%A9%E7%AC%94%E8%AE%B0/" data-id="cklnehe2d0008lww2acog1dkg" data-title="" class="article-share-link">分享</a>
       
       
       
@@ -691,7 +738,7 @@ JavaScript（es6前）中的作用域有两种：
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://lijun199728.github.io/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC05%E5%A4%A9%E7%AC%94%E8%AE%B0/" data-id="cklmc827h0004fow201h57l5j" data-title="" class="article-share-link">分享</a>
+      <a data-url="https://lijun199728.github.io/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC05%E5%A4%A9%E7%AC%94%E8%AE%B0/" data-id="cklnehe290004lww2df0p7e15" data-title="" class="article-share-link">分享</a>
       
       
       
@@ -872,7 +919,7 @@ JavaScript（es6前）中的作用域有两种：
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://lijun199728.github.io/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC04%E5%A4%A9%E7%AC%94%E8%AE%B0/" data-id="cklmc827g0003fow29e3x6kt3" data-title="" class="article-share-link">分享</a>
+      <a data-url="https://lijun199728.github.io/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC04%E5%A4%A9%E7%AC%94%E8%AE%B0/" data-id="cklnehe270003lww25zn3evfq" data-title="" class="article-share-link">分享</a>
       
       
       
@@ -1027,7 +1074,7 @@ JavaScript（es6前）中的作用域有两种：
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://lijun199728.github.io/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC03%E5%A4%A9%E7%AC%94%E8%AE%B0/" data-id="cklmc827f0002fow24jiedray" data-title="" class="article-share-link">分享</a>
+      <a data-url="https://lijun199728.github.io/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC03%E5%A4%A9%E7%AC%94%E8%AE%B0/" data-id="cklnehe250002lww2dfk7b95r" data-title="" class="article-share-link">分享</a>
       
       
       
@@ -1251,7 +1298,7 @@ JavaScript（es6前）中的作用域有两种：
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://lijun199728.github.io/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC02%E5%A4%A9%E7%AC%94%E8%AE%B0/" data-id="cklmc827c0001fow2dzds0ij7" data-title="" class="article-share-link">分享</a>
+      <a data-url="https://lijun199728.github.io/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC02%E5%A4%A9%E7%AC%94%E8%AE%B0/" data-id="cklnehe220001lww265s87ix1" data-title="" class="article-share-link">分享</a>
       
       
       
@@ -1766,7 +1813,7 @@ JS中的注释主要有两种，分别是 单行注释 和 多行注释。
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://lijun199728.github.io/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC01%E5%A4%A9%E7%AC%94%E8%AE%B0/" data-id="cklmc827s0008fow2biyc8ugx" data-title="" class="article-share-link">分享</a>
+      <a data-url="https://lijun199728.github.io/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC01%E5%A4%A9%E7%AC%94%E8%AE%B0/" data-id="cklnehe2k0009lww2ft684nh8" data-title="" class="article-share-link">分享</a>
       
       
       
@@ -1809,6 +1856,10 @@ JS中的注释主要有两种，分别是 单行注释 和 多行注释。
       <ul>
         
           <li>
+            <a href="/2021/02/27/%E5%89%8D%E5%90%8E%E7%AB%AF%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81/">(no title)</a>
+          </li>
+        
+          <li>
             <a href="/2021/02/26/mysql%E6%A8%A1%E5%9D%97%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/">mysql模块操作数据库</a>
           </li>
         
@@ -1822,10 +1873,6 @@ JS中的注释主要有两种，分别是 单行注释 和 多行注释。
         
           <li>
             <a href="/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC05%E5%A4%A9%E7%AC%94%E8%AE%B0/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2021/02/10/JavaScript%E5%9F%BA%E7%A1%80%E7%AC%AC04%E5%A4%A9%E7%AC%94%E8%AE%B0/">(no title)</a>
           </li>
         
       </ul>
