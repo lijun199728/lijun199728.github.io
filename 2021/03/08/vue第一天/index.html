@@ -17,7 +17,7 @@
   <meta name="description" content="笔记">
   <meta name="author" content="Justin">
   <meta name="keywords" content="哈哈哈">
-  <title>Hexo</title>
+  <title>vue第一天 - Hexo</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -162,7 +162,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="">
+            <span class="h2" id="subtitle" title="vue第一天">
               
             </span>
 
@@ -224,10 +224,10 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none"></h1>
+            <h1 style="display: none">vue第一天</h1>
             
             <div class="markdown-body">
-              <h2 id="vue第一天"><a href="#vue第一天" class="headerlink" title="vue第一天"></a>vue第一天</h2><h3 id="vue基础的使用"><a href="#vue基础的使用" class="headerlink" title="vue基础的使用"></a>vue基础的使用</h3><h4 id="1-引入vue-js文件"><a href="#1-引入vue-js文件" class="headerlink" title="1.引入vue.js文件"></a>1.引入vue.js文件</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">&lt;script type=<span class="hljs-string">&#x27;text/javascript&#x27;</span> src=<span class="hljs-string">&#x27;./vue.js&#x27;</span>&gt;&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+              <h3 id="vue基础的使用"><a href="#vue基础的使用" class="headerlink" title="vue基础的使用"></a>vue基础的使用</h3><h4 id="1-引入vue-js文件"><a href="#1-引入vue-js文件" class="headerlink" title="1.引入vue.js文件"></a>1.引入vue.js文件</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">&lt;script type=<span class="hljs-string">&#x27;text/javascript&#x27;</span> src=<span class="hljs-string">&#x27;./vue.js&#x27;</span>&gt;&lt;/script&gt;<br></code></pre></td></tr></table></figure>
 <h4 id="2-创建一个存放数据标签"><a href="#2-创建一个存放数据标签" class="headerlink" title="2.创建一个存放数据标签"></a>2.创建一个存放数据标签</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;app&quot;</span>&gt;</span><br>        <span class="hljs-comment">&lt;!-- 存放变量 --&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>&#123;&#123;msg&#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>        <span class="hljs-comment">&lt;!-- 存放表达式 --&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>&#123;&#123;1+1&#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span> <br></code></pre></td></tr></table></figure>
 <h4 id="3-实例化一个vue对象"><a href="#3-实例化一个vue对象" class="headerlink" title="3.实例化一个vue对象"></a>3.实例化一个vue对象</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js">&lt;script type=<span class="hljs-string">&#x27;text/javascript&#x27;</span>&gt;<br>        <span class="hljs-keyword">var</span> vm = <span class="hljs-keyword">new</span> Vue(&#123;<br>            el: <span class="hljs-string">&#x27;#app&#x27;</span>, <br>            data: &#123;<br>                msg: <span class="hljs-string">&#x27;hahaha&#x27;</span><br>            &#125;<br>        &#125;);<br>    &lt;/script&gt;<br></code></pre></td></tr></table></figure>
 <h3 id="基本指令"><a href="#基本指令" class="headerlink" title="基本指令"></a>基本指令</h3><h4 id="指令的基本格式"><a href="#指令的基本格式" class="headerlink" title="指令的基本格式"></a>指令的基本格式</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">&lt;标签 v-属性名=&quot;变量/表达式&quot;&gt;&lt;/标签&gt;<br></code></pre></td></tr></table></figure>
